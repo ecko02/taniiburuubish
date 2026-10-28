@@ -1,0 +1,354 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Таны буруу биш</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+/* Layout: one soft reading column; quiet sage palette; a single font family throughout; mobile-first */
+:root{
+  --bg:#f3f6f5; --surface:#ffffff; --soft:#e6efed; --ink:#2c3a39; --muted:#677775;
+  --line:#e1e8e6; --accent:#4f8079; --accent-ink:#ffffff; --rose:#b0707e; --rose-soft:#f5ebed;
+  --ok:#4c8a6a; --warn:#b07a2e; --crit:#b04a4a;
+  --font:"Nunito", "Segoe UI", Roboto, Arial, sans-serif;
+  --r:18px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#151c1c; --surface:#1d2626; --soft:#243130; --ink:#e4ecea; --muted:#9fb0ad;
+  --line:#2b3736; --accent:#86bdb4; --accent-ink:#132020; --rose:#dca0ad; --rose-soft:#33262a;
+  --ok:#86c7a5; --warn:#e0b06c; --crit:#ec9393; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#151c1c; --surface:#1d2626; --soft:#243130; --ink:#e4ecea; --muted:#9fb0ad;
+  --line:#2b3736; --accent:#86bdb4; --accent-ink:#132020; --rose:#dca0ad; --rose-soft:#33262a;
+  --ok:#86c7a5; --warn:#e0b06c; --crit:#ec9393; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-size:16px;line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 40px}
+.wrap{max-width:640px;margin:0 auto}
+h1,h2,h3{font-family:var(--font);text-wrap:balance;line-height:1.3;margin:0;letter-spacing:-.005em}
+h1{font-size:1.9rem;font-weight:800}
+h2{font-size:1.35rem;font-weight:700}
+h3{font-size:1.05rem;font-weight:700}
+p{margin:0}
+b{font-weight:700}
+a{color:var(--accent);font-weight:600}
+.eyebrow{font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);font-weight:700}
+
+/* top */
+.topbar{display:flex;justify-content:flex-end;padding-block:14px 0}
+.exit{background:var(--surface);color:var(--muted);border:1px solid var(--line);text-decoration:none;font-size:.82rem;font-weight:600;padding:7px 14px;border-radius:999px}
+.nav{display:flex;gap:8px;overflow-x:auto;padding-block:12px;margin-inline:-4px;padding-inline:4px;scrollbar-width:none;font-size:.88rem}
+.nav::-webkit-scrollbar{display:none}
+.nav a{flex:none;text-decoration:none;color:var(--ink);background:var(--surface);border:1px solid var(--line);padding:7px 14px;border-radius:999px;font-weight:600}
+
+.hero{padding-block:20px 28px;display:grid;gap:14px}
+.hero .lede{color:var(--muted);font-size:1.02rem}
+.hero .quote{background:var(--rose-soft);border-radius:var(--r);padding:16px 18px;font-size:1.02rem;font-weight:600;color:var(--ink)}
+
+section{padding-block:32px;display:grid;gap:14px}
+section + section{border-top:1px solid var(--line)}
+.note{background:var(--soft);border-radius:14px;padding:14px 16px;font-size:.92rem;color:var(--ink)}
+
+/* test */
+.scale{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;font-size:.78rem;color:var(--muted);text-align:center}
+.scale span{background:var(--surface);border-radius:10px;padding:6px 4px;line-height:1.3}
+.scale b{display:block;color:var(--ink);font-size:.95rem}
+.part{display:grid;gap:12px;margin-top:22px}
+.part > h3{color:var(--accent)}
+.q{background:var(--surface);border-radius:var(--r);padding:16px;display:grid;gap:12px}
+.q p{font-weight:600;font-size:.98rem;line-height:1.55}
+.q .num{color:var(--muted);font-variant-numeric:tabular-nums;margin-right:6px;font-weight:600}
+.opts{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.opts input{position:absolute;opacity:0;pointer-events:none}
+.opts label{display:grid;place-items:center;text-align:center;min-height:56px;padding:6px 4px;border-radius:12px;
+  background:var(--soft);font-size:.74rem;line-height:1.2;cursor:pointer;color:var(--muted);font-weight:600;transition:background .2s,color .2s}
+.opts label b{display:block;font-size:1rem;color:var(--ink);font-variant-numeric:tabular-nums;margin-bottom:2px}
+.opts input:checked+label{background:var(--accent);color:var(--accent-ink)}
+.opts input:checked+label b{color:var(--accent-ink)}
+.opts input:focus-visible+label{outline:2px solid var(--accent);outline-offset:2px}
+.yn{grid-template-columns:repeat(2,1fr)}
+.yn label{min-height:46px;font-size:.9rem}
+.btn{font:inherit;font-weight:700;font-size:1rem;border:0;border-radius:999px;padding:14px 24px;background:var(--accent);color:var(--accent-ink);cursor:pointer}
+.btn.ghost{background:transparent;color:var(--accent);box-shadow:inset 0 0 0 1.5px var(--accent)}
+.btn:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-top:20px}
+.count{font-size:.88rem;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* result */
+.result{background:var(--surface);border-radius:var(--r);padding:20px;display:grid;gap:18px;margin-top:8px}
+.score{display:flex;align-items:baseline;gap:8px 10px;flex-wrap:wrap}
+.score .big{font-size:2.6rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1}
+.score .of{color:var(--muted)}
+.band{display:inline-block;padding:4px 12px;border-radius:999px;font-weight:700;font-size:.85rem}
+.b0{background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok)}
+.b1{background:color-mix(in srgb,var(--warn) 16%,transparent);color:var(--warn)}
+.b2,.b3{background:color-mix(in srgb,var(--crit) 14%,transparent);color:var(--crit)}
+.bars{display:grid;gap:12px}
+.bar{display:grid;gap:4px}
+.bar .lbl{display:flex;justify-content:space-between;gap:10px;font-size:.9rem;font-weight:600}
+.bar .lbl span:last-child{color:var(--muted);font-variant-numeric:tabular-nums;white-space:nowrap}
+.track{height:8px;border-radius:99px;background:var(--soft);overflow:hidden}
+.fill{height:100%;border-radius:99px;background:var(--accent)}
+.fill.hi{background:var(--crit)} .fill.mid{background:var(--warn)}
+.flags{display:grid;gap:8px;padding:0;margin:0;list-style:none}
+.flags li{padding:12px 14px;border-radius:14px;background:var(--rose-soft);font-size:.93rem}
+.alert{border-radius:14px;padding:14px 16px;background:color-mix(in srgb,var(--crit) 10%,transparent)}
+.alert h3{color:var(--crit);margin-bottom:6px}
+ul.plain{margin:0;padding-left:20px;display:grid;gap:8px}
+
+/* signs */
+.cards{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr))}
+.card{background:var(--surface);border-radius:var(--r);padding:16px;display:grid;gap:6px;align-content:start}
+.card p{font-size:.93rem;color:var(--muted)}
+.sub{margin-top:10px}
+
+/* not your fault */
+.truths{display:grid;gap:10px}
+.truth{padding:16px;background:var(--surface);border-radius:var(--r)}
+.truth b{display:block;font-size:1rem;margin-bottom:4px;color:var(--rose)}
+.truth span{color:var(--muted);font-size:.93rem}
+
+/* breathe */
+.breathe{display:grid;justify-items:center;gap:14px;background:var(--surface);border-radius:var(--r);padding:28px 16px}
+.circle{width:150px;height:150px;max-width:100%;border-radius:50%;background:radial-gradient(circle,var(--soft) 30%,color-mix(in srgb,var(--accent) 40%,transparent));
+  display:grid;place-items:center;transform:scale(.6);transition:transform 4s ease-in-out;font-weight:800;font-size:1.3rem;color:var(--ink)}
+.phase{font-size:1.1rem;font-weight:700;min-height:1.6em;text-align:center}
+
+/* help */
+.help{display:grid;gap:10px}
+.line{display:flex;justify-content:space-between;align-items:center;gap:6px 12px;flex-wrap:wrap;background:var(--surface);border-radius:var(--r);padding:14px 16px;font-size:.95rem}
+.line > div{min-width:0}
+.line .n{font-size:1.4rem;font-weight:800;color:var(--accent);font-variant-numeric:tabular-nums;user-select:all}
+.line small{display:block;color:var(--muted);font-size:.8rem}
+footer{padding-top:24px;font-size:.84rem;color:var(--muted);border-top:1px solid var(--line)}
+
+@media (max-width:420px){
+  h1{font-size:1.65rem}
+  h2{font-size:1.25rem}
+  .q{padding:14px}
+  .opts label{font-size:.7rem;min-height:54px}
+  .actions .btn{flex:1 1 100%}
+  .result{padding:16px}
+}
+@media (prefers-reduced-motion:reduce){.circle,.opts label{transition:none}}
+</style>
+
+<div class="wrap">
+  <div class="topbar"><a class="exit" href="https://www.google.com" target="_blank" rel="noopener">Хурдан гарах ✕</a></div>
+  <nav class="nav" aria-label="Хэсгүүд">
+    <a href="#test">Тест</a><a href="#signs">Шинж тэмдэг</a><a href="#fault">Таны буруу биш</a><a href="#calm">Тайвшрах</a><a href="#help">Тусламж</a>
+  </nav>
+
+  <header class="hero">
+    <span class="eyebrow">Харилцааны өөрийгөө үнэлэх тест · Сэтгэл санааны дэмжлэг</span>
+    <h1>Таны буруу биш</h1>
+    <p class="lede">Хэрэв та хэн нэгний дэргэд байнга өөрийгөө буруутай мэт мэдэрч, хэлэх үг бүрээ цэнэж, эсвэл тэр хүнээс холдох тухай бодох бүрдээ гэмшдэг бол энэ хуудсыг уншаарай. Энд хэн нэгнийг шүүх, буруутгах гэсэнгүй. Харин таны мэдрэмж, сэтгэл санаа, амар амгалан ч бас чухал гэдгийг сануулахыг хүсэж байна.</p>
+    <p class="quote">Та хэн нэгнийг хайрладаг байж болно. Гэхдээ тэр харилцаа таныг шаналгаж ч бас болно. Энэ хоёр мэдрэмж зэрэгцэн оршиж болдог.</p>
+  </header>
+
+  <section id="test" aria-labelledby="t-h">
+    <span class="eyebrow">30 асуулт · 5–7 минут</span>
+    <h2 id="t-h">Би хяналт, манипуляцтай харилцаанд байна уу?</h2>
+    <p>Асуулт бүрд өөрийн мэдрэмж, туулж буй туршлагадаа тулгуурлан үнэнчээр хариулаарай. Энэ асуулга тухайн хүнийг хайрладаг эсэх, эсвэл түүнд сайн тал бий эсэхийг дүгнэхгүй. Харин тэр хүн танд хэрхэн ханддаг, та түүний дэргэд ямар мэдрэмж авдаг, өөрийнхөөрөө байж чаддаг эсэхийг эргэцүүлэхэд тусална.</p>
+    <div class="note">Таны хариулт хаана ч хадгалагдахгүй, хэнд ч илгээгдэхгүй. Хуудсыг хаахад бүгд арилна.</div>
+    <div class="scale"><span><b>0</b> Хэзээ ч үгүй</span><span><b>1</b> Заримдаа</span><span><b>2</b> Ихэвчлэн</span><span><b>3</b> Бараг үргэлж</span></div>
+    <form id="quiz" novalidate></form>
+    <div class="actions">
+      <button class="btn" id="calc" type="button">Үр дүнгээ харах</button>
+      <button class="btn ghost" id="reset" type="button">Дахин эхлэх</button>
+      <span class="count" id="count">0 / 30 хариулсан</span>
+    </div>
+    <div id="out" hidden></div>
+  </section>
+
+  <section id="signs" aria-labelledby="s-h">
+    <span class="eyebrow">Танихад туслах</span>
+    <h2 id="s-h">Сэтгэл хөдлөлөөр удирдах шинж тэмдгүүд</h2>
+    <h3>Түүний дэргэд та юу мэдэрдэг вэ?</h3>
+    <div class="cards">
+      <div class="card"><h3>Байнга эргэлзэж, төөрөлдөх</h3><p>Түүнтэй харилцах үедээ ч, дараа нь ч стресс, түгшүүр, тавгүй байдал арилдаггүй.</p></div>
+      <div class="card"><h3>Алхам тутамдаа болгоомжлох</h3><p>Түүний уур, сөрөг хариу үйлдлээс айгаад жинхэнэ бодол, мэдрэмжээ нуудаг.</p></div>
+      <div class="card"><h3>Өөрийгөө буруутгах</h3><p>Өөрийн буруу биш зүйлийг хүртэл үүрч, гэмшил таныг түүний хүссэнээр байлгадаг.</p></div>
+      <div class="card"><h3>Өөртөө итгэхээ болих</h3><p>Тэр болсон явдлыг мушгиж, үгүйсгэсээр байгаад та өөрийн ой санамж, ойлголтод эргэлзэж эхэлдэг. Үүнийг <i>gaslighting</i> гэдэг.</p></div>
+    </div>
+    <h3 class="sub">Түгээмэл хэрэглэдэг арга барил</h3>
+    <div class="cards">
+      <div class="card"><h3>Бурууг эргүүлж тохох</h3><p>Баримтыг өөрөөр тайлбарлаж, өөрийгөө хохирогч болгоод, эцэст нь та уучлалт гуйдаг болдог.</p></div>
+      <div class="card"><h3>Хил хязгаарыг үл хүндэтгэх</h3><p>“Үгүй” гэхэд таныг хувиа хичээсэн мэт болгох, дуугаа хурааж шийтгэх.</p></div>
+      <div class="card"><h3>Гэр бүл, найз нөхдөөс холдуулах</h3><p>Таныг дэмждэг хүмүүсээс аажмаар тусгаарлаж, өөрөөсөө илүү хамааралтай болгох.</p></div>
+      <div class="card"><h3>Гэмшил төрүүлэх, айлгах</h3><p>“Чи надад огт санаа тавьдаггүй” гэх мэтээр дарамтлах, сүрдүүлэх, туйлширсан үйлдэл хийх.</p></div>
+    </div>
+  </section>
+
+  <section id="fault" aria-labelledby="f-h">
+    <span class="eyebrow">Өөртөө сануулах зүйлс</span>
+    <h2 id="f-h">Эдгээр нь таны буруу биш</h2>
+    <div class="truths">
+      <div class="truth"><b>Хүнд үед тань хажууд байгаагүй нь таны буруу биш.</b><span>Таныг өвдөж, зовж байхад орхисон бол тэр сонголтыг тэр өөрөө хийсэн.</span></div>
+      <div class="truth"><b>Доромжилсон үгс таныг биш, хэлсэн хүний хандлагыг илэрхийлдэг.</b><span>Таныг ямар хүн болохыг бусдын хэлсэн муухай үгс тодорхойлохгүй.</span></div>
+      <div class="truth"><b>Өөрийгөө хамгаалах нь бусдыг зовоож байгаа зүйл биш.</b><span>Зай авах, хил хязгаар тогтоох нь таны эрх.</span></div>
+      <div class="truth"><b>Шийдвэр гаргахад яарах шаардлагагүй.</b><span>Эргэлзэж, ядарч, гуниглах нь хэвийн. Өөрийн хурдаар явж болно.</span></div>
+    </div>
+    <h3 class="sub">Өөрийгөө хэрхэн хамгаалах вэ?</h3>
+    <ul class="plain">
+      <li><b>Өөрийн мэдрэмжид итгэ.</b> Ямар нэг зүйл буруу санагдвал бие, сэтгэлийн тань өгч буй дохиог анхаар.</li>
+      <li><b>Хил хязгаараа тодорхой хэл.</b> Шийдвэрээ хэт их тайлбарлаж, зөвтгөх шаардлагагүй.</li>
+      <li><b>Болсон явдлаа тэмдэглэ.</b> Огноо, юу хэлсэн, юу болсныг бичиж үлдээх нь өөрийн ой санамжинд итгэхэд тусална.</li>
+      <li><b>Ганцаараа бүү үүр.</b> Итгэдэг дүү, найз, сэтгэл зүйчтэйгээ ярилц. Таныг сонсох хүмүүс бий.</li>
+    </ul>
+  </section>
+
+  <section id="calm" aria-labelledby="c-h">
+    <span class="eyebrow">2 минутын дасгал</span>
+    <h2 id="c-h">Сэтгэл өвдөж байвал эхлээд амьсгалаа</h2>
+    <p>Тойргийг дагаад 4 тоолж амьсгал ав, 4 тоолж барь, 6 тоолж аажуухан гарга. Гаргах амьсгал удаан байх тусам бие тайвширдаг.</p>
+    <div class="breathe">
+      <div class="circle" id="circle"><span id="tick"></span></div>
+      <div class="phase" id="phase">Бэлэн үү?</div>
+      <button class="btn" id="bbtn" type="button">Эхлүүлэх</button>
+    </div>
+  </section>
+
+
+
+  <footer>Энэ тест нь албан ёсны сэтгэл зүйн оношилгоо биш, зөвхөн өөрийгөө эргэцүүлэхэд туслах хэрэгсэл юм. Нийт онооноос илүү ямар зан үйл давтагдаж байгаа нь чухал.</footer>
+</div>
+
+<script>
+const PARTS=[
+ {t:"1. Түүний дэргэд таны мэдрэмж",k:"feel",qs:[
+  "Түүний уурыг хүргэхээс айж, хэлэх үг, хийх үйлдэл бүрээ хэтэрхий болгоомжлон хянадаг уу?",
+  "Маргааны дараа юу болсныг ойлгохгүй эргэлзэж, эцэст нь бүх зүйлд өөрийгөө буруутгадаг уу?",
+  "Ямар нэг буруу зүйл хийгээгүй байсан ч өөрийгөө буруутай мэт мэдэрч, гэмшдэг үү?",
+  "Өөрийгөө буруугүй гэж бодож байсан ч маргааныг дуусгаж, эвлэрэхийн тулд уучлалт гуйдаг уу?",
+  "Тэр уурлах, гомдох эсвэл тантай харилцахаа болих үед та түгшиж, сэтгэл санаа тань тавгүйтдэг үү?",
+  "Түүний хэлсэн үг, гаргасан үйлдлээс болж өөрийн ой санамж, бодол санаа, мэдрэмждээ эргэлздэг болсон уу?"]},
+ {t:"2. Хяналт ба эрх чөлөө",k:"control",qs:[
+  "Таны өмсөх хувцас, уулзах хүн, явах газар, цагаа хэрхэн өнгөрүүлэхийг хянахыг оролддог уу?",
+  "Таныг найз нөхөд, гэр бүлтэйгээ цагийг өнгөрүүлэхэд атаархаж, хардаж сэрддэг үү?",
+  "Танаас шууд хариу бичих, байршлаа хуваалцах, хийж байгаа бүхнээ тайлбарлахыг шаарддаг уу?",
+  "Таны утас, мессеж, сошиал хаягийг зөвшөөрөлгүй шалгадаг уу?",
+  "Гэр бүл, найз нөхөдтэйгөө уулзахад тань саад болдог, эсвэл уулзсаныхаа төлөө гэмшихэд хүргэдэг үү?",
+  "Түүнийг уурлахаас айсандаа дуртай зүйлээ хийхээ больсон уу?"]},
+ {t:"3. Манипуляц, сэтгэл санааны дарамт",k:"manip",qs:[
+  "“Чи надад үнэхээр хайртай бол ингэх ёстой” гэх мэт үгээр таныг хүсээгүй зүйлээ хийхэд шахдаг уу?",
+  "Түүний уур бухимдал, атаархал, гунигт та буруутай мэт санагдуулж, сэтгэл хөдлөлийг нь зохицуулах үүргийг танд үүрүүлдэг үү?",
+  "Та гомдсон, сэтгэл дундуур байгаагаа хэлэхэд яриаг өөр тийш нь эргүүлж, эцэст нь та түүнийг тайвшруулах эсвэл өөрөө уучлалт гуйхад хүргэдэг үү?",
+  "Өөрийнхөө хэлсэн, хийсэн зүйлийг үгүйсгэж, “Чи л буруу ойлгосон”, “Чи хий хоосон зүйл бодож байна” гэх мэтээр таныг өөрийн ой санамж, бодол санаандаа эргэлзэхэд хүргэдэг үү?",
+  "Таныг шийтгэх эсвэл хүссэнээ хийлгэхийн тулд хайр, халамжаа гэнэт татаж, тантай харилцахаа больдог уу?",
+  "Маргалдах үедээ таны эмзэг тал, өмнөх алдаа, эсвэл итгэж хэлсэн нууцыг тань эсрэг ашигладаг уу?",
+  "Түүний хүссэнээр хийхгүй бол салах, араар тавих, өөрийгөө гэмтээх, эсвэл таны нууцыг дэлгэх зэргээр сүрдүүлдэг үү?"]},
+ {t:"4. Хил хязгаар ба хүндэтгэл",k:"bound",rev:true,note:"Энэ хэсгийн асуултууд эерэг утгатай. Бага оноо өгсөн бол энэ нь анхаарах дохио гэж тооцогдоно.",qs:[
+  "Таныг шийтгэх, сүрдүүлэх, гэмшүүлэх эсвэл дахин дахин шахах вий гэж айхгүйгээр “Үгүй” гэж хэлж чаддаг уу?",
+  "Доромжлуулах, айлган сүрдүүлэх, дорд үзүүлэх вий гэж айхгүйгээр түүнтэй санал зөрж чаддаг уу?",
+  "Тэр өөрийн гаргасан үйлдэлд хариуцлага хүлээж, зүгээр уучлалт гуйгаад өнгөрөхийн оронд зан үйлээ бодитоор өөрчилдөг үү?",
+  "Тэр таны хувийн орон зай, бие даасан байдал, зорилго, бусадтай харилцах харилцааг хүндэтгэдэг үү?",
+  "Түүний хариу үйлдлээс айхгүйгээр өөрийн мэдрэмж, бодлоо илэн далангүй илэрхийлж чаддаг уу?"]},
+ {t:"5. Энэ харилцаа таныг хэрхэн өөрчилсөн бэ?",k:"change",qs:[
+  "Энэ харилцаанд орсноос хойш өөртөө итгэх итгэл тань буурч, өөрийнхөөрөө байхаа больсон мэт санагддаг уу?",
+  "Энэ харилцаанаас болж найз нөхөд, гэр бүлээсээ хөндийрсөн үү?",
+  "Түүнийг хэрхэн баярлуулах, дараагийн маргаанаас хэрхэн сэргийлэх талаар байнга бодож, их цаг зарцуулдаг уу?",
+  "Түүний хайр, халамжийг хүртэхийн тулд үргэлж төгс, дуулгавартай, бэлэн байх ёстой мэт санагддаг уу?",
+  "Энэ харилцаанаас болж сэтгэл санаагаар туйлдаж, айдастай, үнэ цэнгүй эсвэл эрх чөлөөгүй мэт мэдрэгддэг үү?",
+  "Хэрэв таны дүү эсвэл дотны найз тань яг ийм харилцаатай байгаагаа яривал та түүнд санаа зовох байсан уу?"]}
+];
+const SAFETY=[
+ "Тэр танд гар хүрч, түлхэж, цохиж байсан уу?",
+ "Таныг эсвэл хүүхдийг тань гэмтээнэ гэж заналхийлж байсан уу?",
+ "Хүсээгүй бэлгийн харьцаанд албадаж байсан уу?",
+ "Таныг мөрдөж, хаана байгааг тань нууцаар хянадаг уу?"
+];
+const LAB=["Хэзээ ч үгүй","Заримдаа","Ихэвчлэн","Бараг үргэлж"];
+const form=document.getElementById('quiz');
+let n=0,html="";
+PARTS.forEach(p=>{
+  html+=`<div class="part"><h3>${p.t}</h3>${p.note?`<p class="note">${p.note}</p>`:""}`;
+  p.qs.forEach(q=>{n++;
+    html+=`<div class="q"><p><span class="num">${n}.</span>${q}</p><div class="opts" role="radiogroup" aria-label="Асуулт ${n}">`+
+    LAB.map((l,v)=>`<input type="radio" name="q${n}" id="q${n}v${v}" value="${v}"><label for="q${n}v${v}"><span><b>${v}</b>${l}</span></label>`).join("")+`</div></div>`;
+  });
+  html+=`</div>`;
+});
+html+=`<div class="part"><h3>Аюулгүй байдлын асуултууд</h3><p class="note">Эдгээр нь оноонд орохгүй. Гэхдээ аль нэгэнд “Тийм” гэвэл тусад нь анхаарах ёстой.</p>`;
+SAFETY.forEach((q,i)=>{
+  html+=`<div class="q"><p><span class="num">•</span>${q}</p><div class="opts yn" role="radiogroup" aria-label="${q}">`+
+  ["Үгүй","Тийм"].map((l,v)=>`<input type="radio" name="s${i}" id="s${i}v${v}" value="${v}"><label for="s${i}v${v}">${l}</label>`).join("")+`</div></div>`;
+});
+html+=`</div>`;
+form.innerHTML=html;
+
+const countEl=document.getElementById('count');
+function answered(){let c=0;for(let i=1;i<=30;i++) if(form.querySelector(`input[name=q${i}]:checked`)) c++;return c}
+form.addEventListener('change',()=>{countEl.textContent=`${answered()} / 30 хариулсан`});
+
+const BANDS=[
+ {max:15,c:"b0",t:"Харьцангуй бага",d:"Хяналт, манипуляцын шинж тэмдэг цөөн илэрсэн байж болно. Гэхдээ ганц ноцтой үйлдэл байсан ч үл тоомсорлож болохгүй."},
+ {max:30,c:"b1",t:"Анхаарах шаардлагатай",d:"Харилцаанд эрүүл бус хэв маяг байгаа эсэхийг нухацтай ажиглаж, бодох хэрэгтэй."},
+ {max:50,c:"b2",t:"Санаа зовоох шинж тэмдэг олон",d:"Давтагдсан буруутгал, хяналт, айдас, тусгаарлалт байгаа эсэхийг нухацтай авч үзэх хэрэгтэй. Энэ бол таны буруугаас болсон зүйл биш."},
+ {max:90,c:"b3",t:"Маш их анхаарал хэрэгтэй",d:"Хяналт, сэтгэл санааны дарамтын олон шинж тэмдэг илэрч байна. Итгэдэг хүн эсвэл мэргэжлийн зөвлөгчтэй аюулгүй орчинд ярилцаарай. Та ганцаараа биш."}
+];
+const PNAME={feel:"Таны мэдрэмж",control:"Хяналт, тусгаарлалт",manip:"Манипуляц, дарамт",bound:"Хил хязгаар зөрчигдөх",change:"Таны өөрчлөлт"};
+const PFLAG={
+ control:"Таны хувийн амьдрал, найз нөхөд, гэр бүлтэй харилцахыг хянах, тусгаарлах шинж давтагдаж байна.",
+ manip:"Буруугаа тохох, бодит байдалд эргэлзүүлэх, сэтгэл хөдлөлөөр дарамтлах шинж давтагдаж байна.",
+ bound:"“Үгүй” гэх, санал зөрөх, мэдрэмжээ айхгүй хэлэх эрх тань хангалттай хүндлэгдэхгүй байна.",
+ change:"Энэ харилцаа таны өөртөө итгэх итгэл, эрч хүч, амар амгаланд сөргөөр нөлөөлсөн бололтой.",
+ feel:"Та түүний дэргэд байнга айж, гэмшиж, өөрийгөө буруутгадаг болсон байна. Энэ мэдрэмж таны сул тал биш, нөхцөл байдлын үр дагавар."
+};
+document.getElementById('calc').addEventListener('click',()=>{
+  let total=0,i=0,skipped=0;const per={};
+  PARTS.forEach(p=>{per[p.k]={s:0,m:p.qs.length*3,hi:0};
+    p.qs.forEach(()=>{i++;const el=form.querySelector(`input[name=q${i}]:checked`);
+      if(!el){skipped++;return}
+      let v=+el.value; if(p.rev) v=3-v;
+      total+=v;per[p.k].s+=v;if(v>=2)per[p.k].hi++;
+    });
+  });
+  const danger=SAFETY.some((_,j)=>{const e=form.querySelector(`input[name=s${j}]:checked`);return e&&e.value==="1"});
+  const b=BANDS.find(x=>total<=x.max);
+  let bars="",flags="";
+  PARTS.forEach(p=>{const r=per[p.k],pct=Math.round(r.s/r.m*100),cls=pct>=60?"hi":pct>=34?"mid":"";
+    bars+=`<div class="bar"><div class="lbl"><span>${PNAME[p.k]}</span><span>${r.s} / ${r.m}</span></div><div class="track"><div class="fill ${cls}" style="width:${pct}%"></div></div></div>`;
+    if(r.hi>=2) flags+=`<li>${PFLAG[p.k]}</li>`;
+  });
+  const out=document.getElementById('out');
+  out.innerHTML=`<div class="result">
+    ${danger?`<div class="alert"><h3>Таны аюулгүй байдал хамгийн чухал</h3><p>Гар хүрэх, заналхийлэх, албадах, мөрдөх нь оноо ямар ч байсан ноцтой анхааруулах дохио юм. Аюултай үед <b>102</b> руу залгаарай. Ярилцах хүн хэрэгтэй бол <b>1800-2000</b> (24/7, үнэгүй). Түүнтэй ганцаараа тулж ярихгүй байгаарай.</p></div>`:""}
+    <div class="score"><span class="big">${total}</span><span class="of">/ 90 оноо</span><span class="band ${b.c}">${b.t}</span></div>
+    <p>${b.d}</p>
+    ${skipped?`<p class="count">${skipped} асуултад хариулаагүй тул 0 гэж тооцсон.</p>`:""}
+    <div class="bars">${bars}</div>
+    ${flags?`<div><h3 style="margin-bottom:8px">Онцгой анхаарах зүйлс</h3><ul class="flags">${flags}</ul></div>`:""}
+    <div><h3 style="margin-bottom:8px">Өөрөөсөө тайван асуугаарай</h3><ul class="plain">
+      <li>Би хайрлагдаж, хүндлэгдэж байгаа учраас үлдэж байна уу, эсвэл явбал юу болох вий гэж айгаад үлдэж байна уу?</li>
+      <li>Түүний дэргэд би жинхэнэ өөрөөрөө байж чаддаг уу?</li>
+      <li>Надад өөрийн бодол, найз нөхөд, хил хязгаар, мөрөөдөл байхыг зөвшөөрдөг үү?</li>
+      <li>Намайг гомдоосны дараа тэр үнэхээр өөрчлөгддөг үү, эсвэл нэг л тойрог давтагддаг уу?</li>
+      <li>Ирэх хоёр жилд юу ч өөрчлөгдөхгүй бол би ингэж амьдрахдаа аз жаргалтай байх уу?</li>
+    </ul></div>
+    <p class="note">Бүх асуултад “тийм” гэж хариулаагүй ч таны санаа зоволт үндэслэлтэй. Түүнийг муу хүн гэж батлах шаардлагагүйгээр түүний үйлдэл таныг шаналгаж байгааг хүлээн зөвшөөрч болно. Та эрх чөлөө, итгэл, амар амгалангаа золиослохыг шаарддаггүй хайрыг хүртэх ёстой.</p>
+    <p><a href="#fault">Таны буруу биш шалтгаанууд →</a> &nbsp; <a href="#help">Тусламжийн утас →</a></p>
+  </div>`;
+  out.hidden=false;
+  out.scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'start'});
+});
+document.getElementById('reset').addEventListener('click',()=>{form.reset();document.getElementById('out').hidden=true;countEl.textContent="0 / 30 хариулсан";form.scrollIntoView({block:'start'})});
+
+/* breathing */
+const circle=document.getElementById('circle'),phase=document.getElementById('phase'),tick=document.getElementById('tick'),bbtn=document.getElementById('bbtn');
+let timer=null;
+const STEPS=[{t:"Амьсгал ав",s:4,sc:1},{t:"Барь",s:4,sc:1},{t:"Аажуухан гарга",s:6,sc:.6}];
+function stop(){clearInterval(timer);timer=null;bbtn.textContent="Эхлүүлэх";phase.textContent="Сайн байна. Хүссэн үедээ дахин хийгээрэй.";tick.textContent="";circle.style.transform="scale(.6)"}
+bbtn.addEventListener('click',()=>{
+  if(timer){stop();return}
+  bbtn.textContent="Зогсоох";let si=0,left=STEPS[0].s,rounds=0;
+  const show=()=>{const st=STEPS[si];phase.textContent=st.t;circle.style.transitionDuration=st.s+"s";circle.style.transform=`scale(${st.sc})`;tick.textContent=left};
+  show();
+  timer=setInterval(()=>{left--;
+    if(left<=0){si=(si+1)%STEPS.length;if(si===0&&++rounds>=8){stop();return}left=STEPS[si].s;show()}
+    else tick.textContent=left;
+  },1000);
+});
+</script>
+
+</body></html>
