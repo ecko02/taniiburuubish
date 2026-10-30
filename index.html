@@ -1,4 +1,8 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>Таны буруу биш</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap">
@@ -122,6 +126,27 @@ ul.plain{margin:0;padding-left:20px;display:grid;gap:8px}
 .line small{display:block;color:var(--muted);font-size:.8rem}
 footer{padding-top:24px;font-size:.84rem;color:var(--muted);border-top:1px solid var(--line)}
 
+
+/* chat */
+.chat{background:var(--surface);border-radius:var(--r);display:grid;grid-template-rows:auto 1fr auto;overflow:hidden}
+.chat-head{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.avatar{width:36px;height:36px;border-radius:50%;background:var(--soft);display:grid;place-items:center;color:var(--accent);font-weight:800;flex:none}
+.chat-head small{display:block;color:var(--muted);font-size:.8rem;line-height:1.3}
+.msgs{display:flex;flex-direction:column;gap:10px;padding:16px;max-height:min(60vh,480px);min-height:220px;overflow-y:auto;overscroll-behavior:contain}
+.msg{max-width:86%;padding:10px 14px;border-radius:16px;font-size:.95rem;line-height:1.6;white-space:pre-wrap;overflow-wrap:anywhere}
+.msg.bot{background:var(--soft);align-self:flex-start;border-bottom-left-radius:6px}
+.msg.me{background:var(--accent);color:var(--accent-ink);align-self:flex-end;border-bottom-right-radius:6px}
+.msg.wait{color:var(--muted);font-style:italic}
+.chips{display:flex;gap:6px;flex-wrap:wrap;padding:0 16px 12px}
+.chip{font:inherit;font-size:.82rem;font-weight:600;background:transparent;color:var(--accent);border:1px solid var(--line);border-radius:999px;padding:6px 12px;cursor:pointer;text-align:left}
+.chip:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.composer{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line);align-items:flex-end}
+.composer textarea{flex:1;min-width:0;font:inherit;font-size:16px;line-height:1.5;resize:none;border:1px solid var(--line);border-radius:14px;padding:10px 12px;background:var(--bg);color:var(--ink);max-height:140px}
+.composer textarea:focus{outline:2px solid var(--accent);outline-offset:0;border-color:transparent}
+.send{font:inherit;font-weight:700;border:0;border-radius:999px;background:var(--accent);color:var(--accent-ink);padding:11px 16px;cursor:pointer;flex:none}
+.send:disabled{opacity:.5;cursor:default}
+.chat-off{padding:16px;color:var(--muted);font-size:.93rem}
+
 @media (max-width:420px){
   h1{font-size:1.65rem}
   h2{font-size:1.25rem}
@@ -132,24 +157,27 @@ footer{padding-top:24px;font-size:.84rem;color:var(--muted);border-top:1px solid
 }
 @media (prefers-reduced-motion:reduce){.circle,.opts label{transition:none}}
 </style>
+</head>
+<body>
+
 
 <div class="wrap">
   <div class="topbar"><a class="exit" href="https://www.google.com" target="_blank" rel="noopener">Хурдан гарах ✕</a></div>
   <nav class="nav" aria-label="Хэсгүүд">
-    <a href="#test">Тест</a><a href="#signs">Шинж тэмдэг</a><a href="#fault">Таны буруу биш</a><a href="#calm">Тайвшрах</a><a href="#help">Тусламж</a>
+    <a href="#test">Тест</a><a href="#signs">Шинж тэмдэг</a><a href="#talk">Ярилцах</a><a href="#fault">Таны буруу биш</a><a href="#calm">Тайвшрах</a><a href="#help">Тусламж</a>
   </nav>
 
   <header class="hero">
     <span class="eyebrow">Харилцааны өөрийгөө үнэлэх тест · Сэтгэл санааны дэмжлэг</span>
     <h1>Таны буруу биш</h1>
-    <p class="lede">Хэрэв та хэн нэгний дэргэд байнга өөрийгөө буруутай мэт мэдэрч, хэлэх үг бүрээ цэнэж, эсвэл тэр хүнээс холдох тухай бодох бүрдээ гэмшдэг бол энэ хуудсыг уншаарай. Энд хэн нэгнийг шүүх, буруутгах гэсэнгүй. Харин таны мэдрэмж, сэтгэл санаа, амар амгалан ч бас чухал гэдгийг сануулахыг хүсэж байна.</p>
-    <p class="quote">Та хэн нэгнийг хайрладаг байж болно. Гэхдээ тэр харилцаа таныг шаналгаж ч бас болно. Энэ хоёр мэдрэмж зэрэгцэн оршиж болдог.</p>
+    <p class="lede">Хэрэв та өөрийгөө байнга буруутай мэт мэдэрч, түүний дэргэд үг бүрээ цэнэж, эсвэл явах гэхээрээ гэмшээд байдаг бол энэ хуудсыг уншаарай. Энд хэн нэгнийг шүүх гэсэн юм байхгүй. Зөвхөн таны мэдрэмж, таны амар амгалан чухал.</p>
+    <p class="quote">Хүнийг хайрлаж байсан ч тэр харилцаа таныг шаналгаж болдог. Хоёулаа зэрэг үнэн байж болно.</p>
   </header>
 
   <section id="test" aria-labelledby="t-h">
     <span class="eyebrow">30 асуулт · 5–7 минут</span>
     <h2 id="t-h">Би хяналт, манипуляцтай харилцаанд байна уу?</h2>
-    <p>Асуулт бүрд өөрийн мэдрэмж, туулж буй туршлагадаа тулгуурлан үнэнчээр хариулаарай. Энэ асуулга тухайн хүнийг хайрладаг эсэх, эсвэл түүнд сайн тал бий эсэхийг дүгнэхгүй. Харин тэр хүн танд хэрхэн ханддаг, та түүний дэргэд ямар мэдрэмж авдаг, өөрийнхөөрөө байж чаддаг эсэхийг эргэцүүлэхэд тусална.</p>
+    <p>Асуулт бүрт шударгаар хариулаарай. Энд түүнийг хайрладаг эсэх, түүнд сайн тал байгаа эсэхийг асуухгүй. Харин та ямар мэдрэмжтэй байдаг, тэр танд хэрхэн ханддаг, та өөрийнхөөрөө байж чаддаг эсэхийг асууна.</p>
     <div class="note">Таны хариулт хаана ч хадгалагдахгүй, хэнд ч илгээгдэхгүй. Хуудсыг хаахад бүгд арилна.</div>
     <div class="scale"><span><b>0</b> Хэзээ ч үгүй</span><span><b>1</b> Заримдаа</span><span><b>2</b> Ихэвчлэн</span><span><b>3</b> Бараг үргэлж</span></div>
     <form id="quiz" novalidate></form>
@@ -180,13 +208,39 @@ footer{padding-top:24px;font-size:.84rem;color:var(--muted);border-top:1px solid
     </div>
   </section>
 
+  <section id="talk" aria-labelledby="k-h">
+    <span class="eyebrow">Асуух, ярилцах</span>
+    <h2 id="k-h">Сэтгэлд байгаагаа бичээрэй</h2>
+    <p>Юу ч асууж, юу ч ярьж болно. Хариулт таны бичсэнд тохируулж гарна. Тест бөглөсөн бол үр дүнг тань харгалзана. Энэ бол хиймэл оюун ухаан бөгөөд сэтгэл зүйчийг орлохгүй.</p>
+    <div class="chat">
+      <div class="chat-head"><div class="avatar" aria-hidden="true">♡</div><div><b>Дэмжлэгийн туслах</b><small>Таны яриа хадгалагдахгүй, хуудсыг хаахад арилна</small></div></div>
+      <div class="msgs" id="msgs" aria-live="polite">
+        <div class="msg bot">Сайн байна уу. Би энд таныг сонсохоор байна. Өнөөдөр сэтгэл тань ямар байна? Юу ч бичсэн болно, таныг шүүхгүй.</div>
+      </div>
+      <div class="chips" id="chips">
+        <button class="chip" type="button">Би буруу шийдвэр гаргасан юм болов уу?</button>
+        <button class="chip" type="button">Түүнийг санаад байна, яах вэ?</button>
+        <button class="chip" type="button">Хадмуудаа зовоож байгаа юм шиг санагдаад байна</button>
+        <button class="chip" type="button">Сэтгэл их өвдөж байна</button>
+      </div>
+      <form class="composer" id="composer">
+        <label for="chatIn" class="sr" hidden>Мессеж</label>
+        <textarea id="chatIn" rows="1" placeholder="Энд бичээрэй…" aria-label="Мессеж бичих"></textarea>
+        <button class="send" id="send" type="submit">Илгээх</button>
+      </form>
+      <div class="chat-off" id="chatOff" hidden>Туслах одоогоор ажиллахгүй байна. Ярилцах хүн хэрэгтэй бол <b>1800-2000</b> руу залгаарай (24 цаг, үнэгүй, нууцлалтай).</div>
+    </div>
+  </section>
+
   <section id="fault" aria-labelledby="f-h">
     <span class="eyebrow">Өөртөө сануулах зүйлс</span>
     <h2 id="f-h">Эдгээр нь таны буруу биш</h2>
     <div class="truths">
       <div class="truth"><b>Хүнд үед тань хажууд байгаагүй нь таны буруу биш.</b><span>Таныг өвдөж, зовж байхад орхисон бол тэр сонголтыг тэр өөрөө хийсэн.</span></div>
-      <div class="truth"><b>Доромжилсон үгс таныг биш, хэлсэн хүний хандлагыг илэрхийлдэг.</b><span>Таныг ямар хүн болохыг бусдын хэлсэн муухай үгс тодорхойлохгүй.</span></div>
-      <div class="truth"><b>Өөрийгөө хамгаалах нь бусдыг зовоож байгаа зүйл биш.</b><span>Зай авах, хил хязгаар тогтоох нь таны эрх.</span></div>
+      <div class="truth"><b>Доромжилсон үг нь хэлсэн хүнийхээ тухай өгүүлдэг.</b><span>Таныг ямар хүн бэ гэдгийг тэр үгс тодорхойлохгүй.</span></div>
+      <div class="truth"><b>Хүүхдээ асарч, гэр бүлээ авч явсан нь таны хайр.</b><span>Хэн нэгэн үүнийг үнэлээгүй нь таны хайрыг бага болгохгүй.</span></div>
+      <div class="truth"><b>Түүний эцэг эх өвчтэй байгаа нь харамсалтай ч таны тэвчих үүрэг биш.</b><span>Тэдний зовлонг хүндэтгэж, өрөвдөж болно. Гэхдээ таны аюулгүй байдал, амар амгалан бас адилхан чухал.</span></div>
+      <div class="truth"><b>Өөрийгөө хамгаалах нь бусдыг зовоох биш.</b><span>Зай авах, хил хязгаар тогтоох нь таны эрх.</span></div>
       <div class="truth"><b>Шийдвэр гаргахад яарах шаардлагагүй.</b><span>Эргэлзэж, ядарч, гуниглах нь хэвийн. Өөрийн хурдаар явж болно.</span></div>
     </div>
     <h3 class="sub">Өөрийгөө хэрхэн хамгаалах вэ?</h3>
@@ -209,7 +263,16 @@ footer{padding-top:24px;font-size:.84rem;color:var(--muted);border-top:1px solid
     </div>
   </section>
 
-
+  <section id="help" aria-labelledby="h-h">
+    <span class="eyebrow">Үнэ төлбөргүй · Нууцлалтай</span>
+    <h2 id="h-h">Тусламж хэрэгтэй бол</h2>
+    <div class="help">
+      <div class="line"><div><small>Сэтгэцийн эрүүл мэндийн зөвлөгөө · 24/7</small>Ярилцах, сонсуулах хүн хэрэгтэй үед</div><span class="n">1800-2000</span></div>
+      <div class="line"><div><small>Цагдаа · яаралтай</small>Заналхийлэл, хүчирхийлэл, аюултай үед</div><span class="n">102</span></div>
+      <div class="line"><div><small>Түргэн тусламж</small>Бие гэмтсэн, эрүүл мэнд аюултай үед</div><span class="n">103</span></div>
+    </div>
+    <p class="note">Аюулгүй бус санагдаж байвал түүнтэй ганцаараа тулж ярихгүй байгаарай. Эхлээд өөрийн аюулгүй байдлыг бодоод, итгэдэг хүнтэйгээ төлөвлөгөө гаргаарай.</p>
+  </section>
 
   <footer>Энэ тест нь албан ёсны сэтгэл зүйн оношилгоо биш, зөвхөн өөрийгөө эргэцүүлэхэд туслах хэрэгсэл юм. Нийт онооноос илүү ямар зан үйл давтагдаж байгаа нь чухал.</footer>
 </div>
@@ -217,40 +280,40 @@ footer{padding-top:24px;font-size:.84rem;color:var(--muted);border-top:1px solid
 <script>
 const PARTS=[
  {t:"1. Түүний дэргэд таны мэдрэмж",k:"feel",qs:[
-  "Түүний уурыг хүргэхээс айж, хэлэх үг, хийх үйлдэл бүрээ хэтэрхий болгоомжлон хянадаг уу?",
-  "Маргааны дараа юу болсныг ойлгохгүй эргэлзэж, эцэст нь бүх зүйлд өөрийгөө буруутгадаг уу?",
-  "Ямар нэг буруу зүйл хийгээгүй байсан ч өөрийгөө буруутай мэт мэдэрч, гэмшдэг үү?",
-  "Өөрийгөө буруугүй гэж бодож байсан ч маргааныг дуусгаж, эвлэрэхийн тулд уучлалт гуйдаг уу?",
-  "Тэр уурлах, гомдох эсвэл тантай харилцахаа болих үед та түгшиж, сэтгэл санаа тань тавгүйтдэг үү?",
-  "Түүний хэлсэн үг, гаргасан үйлдлээс болж өөрийн ой санамж, бодол санаа, мэдрэмждээ эргэлздэг болсон уу?"]},
+  "Түүний уурыг хүргэхээс айгаад үг, үйлдлээ маш болгоомжтой цэнэдэг үү?",
+  "Маргааны дараа юу болсныг ойлгохгүй төөрөлдөж, бүгд миний буруу юм болов уу гэж эргэлздэг үү?",
+  "Юу ч буруу хийгээгүй байхдаа гэмшиж, буруутай мэт санагддаг уу?",
+  "Өөрийгөө буруу гэж бодоогүй ч зөвхөн эвлэрэхийн тулд уучлалт гуйдаг уу?",
+  "Тэр уурласан, гомдсон эсвэл хариу өгөхгүй байхад түгшиж, тайван бус болдог уу?",
+  "Түүний хэлсэн үгнээс болж өөрийн ой санамж, бодол, мэдрэмждээ эргэлзэх болсон уу?"]},
  {t:"2. Хяналт ба эрх чөлөө",k:"control",qs:[
-  "Таны өмсөх хувцас, уулзах хүн, явах газар, цагаа хэрхэн өнгөрүүлэхийг хянахыг оролддог уу?",
-  "Таныг найз нөхөд, гэр бүлтэйгээ цагийг өнгөрүүлэхэд атаархаж, хардаж сэрддэг үү?",
-  "Танаас шууд хариу бичих, байршлаа хуваалцах, хийж байгаа бүхнээ тайлбарлахыг шаарддаг уу?",
-  "Таны утас, мессеж, сошиал хаягийг зөвшөөрөлгүй шалгадаг уу?",
-  "Гэр бүл, найз нөхөдтэйгөө уулзахад тань саад болдог, эсвэл уулзсаныхаа төлөө гэмшихэд хүргэдэг үү?",
-  "Түүнийг уурлахаас айсандаа дуртай зүйлээ хийхээ больсон уу?"]},
+  "Таны хувцас, хэнтэй уулзах, хаашаа явах, цагаа хэрхэн өнгөрөөхийг хянахыг оролддог уу?",
+  "Таныг найз нөхөд, гэр бүлтэйгээ цагийг өнгөрөөхөд атаархаж, сэжиглэдэг үү?",
+  "Тэр даруй хариу бичих, байршлаа хуваалцах, хийсэн бүхнээ тайлбарлахыг шаарддаг уу?",
+  "Таны утас, мессеж, сошиалыг зөвшөөрөлгүй шалгадаг уу?",
+  "Гэр бүл, найз нөхөдтэйгөө уулзахыг тань хориглох, эсвэл гэмшил төрүүлдэг үү?",
+  "Тэр уурлах нь гээд дуртай зүйлээ хийхээ больсон уу?"]},
  {t:"3. Манипуляц, сэтгэл санааны дарамт",k:"manip",qs:[
-  "“Чи надад үнэхээр хайртай бол ингэх ёстой” гэх мэт үгээр таныг хүсээгүй зүйлээ хийхэд шахдаг уу?",
-  "Түүний уур бухимдал, атаархал, гунигт та буруутай мэт санагдуулж, сэтгэл хөдлөлийг нь зохицуулах үүргийг танд үүрүүлдэг үү?",
-  "Та гомдсон, сэтгэл дундуур байгаагаа хэлэхэд яриаг өөр тийш нь эргүүлж, эцэст нь та түүнийг тайвшруулах эсвэл өөрөө уучлалт гуйхад хүргэдэг үү?",
-  "Өөрийнхөө хэлсэн, хийсэн зүйлийг үгүйсгэж, “Чи л буруу ойлгосон”, “Чи хий хоосон зүйл бодож байна” гэх мэтээр таныг өөрийн ой санамж, бодол санаандаа эргэлзэхэд хүргэдэг үү?",
-  "Таныг шийтгэх эсвэл хүссэнээ хийлгэхийн тулд хайр, халамжаа гэнэт татаж, тантай харилцахаа больдог уу?",
-  "Маргалдах үедээ таны эмзэг тал, өмнөх алдаа, эсвэл итгэж хэлсэн нууцыг тань эсрэг ашигладаг уу?",
-  "Түүний хүссэнээр хийхгүй бол салах, араар тавих, өөрийгөө гэмтээх, эсвэл таны нууцыг дэлгэх зэргээр сүрдүүлдэг үү?"]},
+  "“Чи намайг үнэхээр хайрладаг бол ингэнэ” гэх мэт үгээр шахалт үзүүлдэг үү?",
+  "Түүний уур, атаа, гунигийг та хариуцах ёстой мэт болгодог уу?",
+  "Таныг гомдсоноо хэлэхэд яриаг эргүүлж, эцэст нь та түүнийг тайвшруулж эсвэл уучлалт гуйдаг уу?",
+  "Хэлсэн, хийсэн зүйлээ үгүйсгэж, “чи төсөөлөөд байна” гэж ой санамжид тань эргэлзээ төрүүлдэг үү?",
+  "Хайр, анхаарлаа гэнэт татаж, таныг шийтгэх эсвэл хүссэнээ хийлгэх гэж ашигладаг уу?",
+  "Маргааны үеэр таны эмзэг тал, өнгөрсөн алдаа, нууцыг эсрэг ашигладаг уу?",
+  "Хүссэнийг нь хийхгүй бол салах, урвах, өөрийгөө гэмтээх, нууцыг тань дэлгэх гэх мэтээр сүрдүүлдэг үү?"]},
  {t:"4. Хил хязгаар ба хүндэтгэл",k:"bound",rev:true,note:"Энэ хэсгийн асуултууд эерэг утгатай. Бага оноо өгсөн бол энэ нь анхаарах дохио гэж тооцогдоно.",qs:[
-  "Таныг шийтгэх, сүрдүүлэх, гэмшүүлэх эсвэл дахин дахин шахах вий гэж айхгүйгээр “Үгүй” гэж хэлж чаддаг уу?",
-  "Доромжлуулах, айлган сүрдүүлэх, дорд үзүүлэх вий гэж айхгүйгээр түүнтэй санал зөрж чаддаг уу?",
-  "Тэр өөрийн гаргасан үйлдэлд хариуцлага хүлээж, зүгээр уучлалт гуйгаад өнгөрөхийн оронд зан үйлээ бодитоор өөрчилдөг үү?",
-  "Тэр таны хувийн орон зай, бие даасан байдал, зорилго, бусадтай харилцах харилцааг хүндэтгэдэг үү?",
-  "Түүний хариу үйлдлээс айхгүйгээр өөрийн мэдрэмж, бодлоо илэн далангүй илэрхийлж чаддаг уу?"]},
+  "Шийтгэл, сүрдүүлэг, гэмшил, дахин дахин шахалтгүйгээр “үгүй” гэж хэлж чаддаг уу?",
+  "Доромжлуулах, айлгуулах, дорд үзэгдэхгүйгээр түүнтэй санал зөрж чаддаг уу?",
+  "Тэр зан үйлийнхээ хариуцлагыг хүлээж, зүгээр уучлалт гуйгаад давтахын оронд үнэхээр өөрчлөгддөг үү?",
+  "Таны хувийн орон зай, бие даасан байдал, зорилго, бусадтай харилцах харилцааг хүндэлдэг үү?",
+  "Түүний хариу үйлдлээс айхгүйгээр мэдрэмжээ шударга хэлж чаддаг уу?"]},
  {t:"5. Энэ харилцаа таныг хэрхэн өөрчилсөн бэ?",k:"change",qs:[
-  "Энэ харилцаанд орсноос хойш өөртөө итгэх итгэл тань буурч, өөрийнхөөрөө байхаа больсон мэт санагддаг уу?",
-  "Энэ харилцаанаас болж найз нөхөд, гэр бүлээсээ хөндийрсөн үү?",
-  "Түүнийг хэрхэн баярлуулах, дараагийн маргаанаас хэрхэн сэргийлэх талаар байнга бодож, их цаг зарцуулдаг уу?",
-  "Түүний хайр, халамжийг хүртэхийн тулд үргэлж төгс, дуулгавартай, бэлэн байх ёстой мэт санагддаг уу?",
-  "Энэ харилцаанаас болж сэтгэл санаагаар туйлдаж, айдастай, үнэ цэнгүй эсвэл эрх чөлөөгүй мэт мэдрэгддэг үү?",
-  "Хэрэв таны дүү эсвэл дотны найз тань яг ийм харилцаатай байгаагаа яривал та түүнд санаа зовох байсан уу?"]}
+  "Энэ харилцаанаас өмнөхөөсөө өөртөө итгэх итгэл буурч, өөрийнхөөрөө байхаа больсон уу?",
+  "Найз нөхөд, гэр бүлээсээ хөндийрсөн үү?",
+  "Түүнийг яаж баярлуулах, дараагийн маргаанаас яаж сэргийлэх тухай их цаг зарцуулж боддог уу?",
+  "Түүний хайрыг хүртэхийн тулд төгс, дуулгавартай, үргэлж бэлэн байх ёстой мэт санагддаг уу?",
+  "Энэ харилцаанаас болж сэтгэлээр туйлдаж, айж, үнэ цэнэгүй эсвэл баригдсан мэт мэдрэгддэг үү?",
+  "Хэрэв дүү, дотны найз тань яг ийм харилцааны тухай ярьвал та түүнд санаа зовох уу?"]}
 ];
 const SAFETY=[
  "Тэр танд гар хүрч, түлхэж, цохиж байсан уу?",
@@ -349,6 +412,63 @@ bbtn.addEventListener('click',()=>{
     else tick.textContent=left;
   },1000);
 });
+
+/* chat */
+let lastResult=null;
+document.getElementById('calc').addEventListener('click',()=>{
+  const r=document.querySelector('#out .result');
+  if(r) lastResult=r.querySelector('.score').textContent.replace(/\s+/g,' ').trim()+'. '+[...r.querySelectorAll('.bar')].map(b=>b.textContent.replace(/\s+/g,' ').trim()).join('; ')+'. Онцгой анхаарах: '+([...r.querySelectorAll('.flags li')].map(l=>l.textContent).join(' ')||'байхгүй')+(r.querySelector('.alert')?' АЮУЛГҮЙ БАЙДЛЫН АСУУЛТАД "ТИЙМ" ГЭЖ ХАРИУЛСАН.':'');
+});
+const RULES=`Чи бол "Таны буруу биш" гэдэг сэтгэл санааны дэмжлэгийн хуудсан дээрх халуун дотно, тайван туслах. Чамтай ярьж буй хүн бол хүнд харилцаанаас дөнгөж гарсан эмэгтэй байж магадгүй: нөхөр нь удаа дараа доромжилж, хүүхдээ тоогоогүй, хүнд үед нь (жишээ нь осолд орж хүүхдээ алдахад) хажууд нь байгаагүй, бурууг үргэлж түүнд тохож байсан. Тэр одоо блок хийсэн ч хадмууд нь өвчтэй байгаа тул "би тэднийг зовоож байна уу", "зөв шийдвэр гаргасан уу" гэж гэмшиж, сэтгэл өвдөж байж болно. Энэ мэдээллийг тэр өөрөө хэлээгүй бол бүү дурд, зөвхөн ойлгоход ашигла.
+
+Дүрэм:
+- Үргэлж зөвхөн Монгол кирилл үсгээр, энгийн, зөөлөн, ойр дотно өнгөөр хариул. Ихэвчлэн 2–5 өгүүлбэр. Markdown, гарчиг, од, жагсаалт бүү хэрэглэ.
+- Эхлээд мэдрэмжийг нь сонсож, хүлээн зөвшөөр. Дараа нь түүний буруу биш гэдгийг, өөрийгөө хамгаалах эрхтэй гэдгийг зөөлөн сануул.
+- Хуучин хань руу нь доромжилсон, хатуу үг бүү хэрэглэ. Үйлдлийг нь нэрлэ ("таныг доромжилсон нь буруу"), хүнийг нь муулахгүй.
+- Шийдвэрийг түүний өмнөөс бүү гарга, "заавал салах ёстой" гэж бүү шахаарай. Эргэлзэх, санах, гуниглах нь хэвийн гэж хэл.
+- Онош бүү тавь, өөрийгөө сэтгэл зүйч гэж бүү хэл. Хэрэгтэй үед сэтгэл зүйчтэй ярилцахыг зөөлөн санал болго.
+- Хэрвээ тэр аюулд байгаа, заналхийлэл, хүчирхийлэл, эсвэл өөрийгөө гэмтээх, амьдрахыг хүсэхгүй байгаа тухай дурдвал: тэр даруй халуун дотноор хандаж, Цагдаа 102, Сэтгэцийн эрүүл мэндийн зөвлөгөөний утас 1800-2000 (24 цаг, үнэгүй) руу холбогдохыг, итгэдэг хүндээ одоо хэлэхийг уриал.
+- Асуулт асуувал товч, бодитой, хэрэгжүүлж болох зөвлөгөө өг. Төгсгөлд нь зөөлөн нэг асуулт асууж болно.
+- Хүүхэд, хадмууд, эд материалын асуудлыг дурдвал түүний сэтгэл санаа, аюулгүй байдлыг нэгдүгээрт тавь.`;
+const msgsEl=document.getElementById('msgs'),chatIn=document.getElementById('chatIn'),sendBtn=document.getElementById('send'),composer=document.getElementById('composer'),chips=document.getElementById('chips'),chatOff=document.getElementById('chatOff');
+const turns=[];let busy=false,sampleFn=null,chatDisabled=false;
+function bubble(cls,text){const d=document.createElement('div');d.className='msg '+cls;d.textContent=text;msgsEl.appendChild(d);msgsEl.scrollTop=msgsEl.scrollHeight;return d}
+function disableChat(){chatDisabled=true;composer.hidden=true;chips.hidden=true;chatOff.hidden=false}
+chatIn.addEventListener('input',()=>{chatIn.style.height='auto';chatIn.style.height=Math.min(chatIn.scrollHeight,140)+'px'});
+chatIn.addEventListener('keydown',e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing&&matchMedia('(hover:hover)').matches){e.preventDefault();composer.requestSubmit()}});
+chips.addEventListener('click',e=>{const b=e.target.closest('.chip');if(b){chatIn.value=b.textContent;composer.requestSubmit()}});
+async function apiChat(input,opts){
+  const msgs=input.slice(2);
+  const r=await fetch('/api/chat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:msgs,result:lastResult})});
+  if(r.status===429) throw {code:'rate_limited'};
+  if(!r.ok) throw {code:'upstream_error'};
+  const j=await r.json(); if(!j.text) throw {code:'upstream_error'};
+  opts&&opts.onText&&opts.onText({text:j.text,delta:j.text});
+  return {text:j.text};
+}
+(async()=>{try{sampleFn=window.claude?await window.claude.use('sample'):apiChat}catch(e){sampleFn=null}if(!sampleFn)disableChat()})();
+composer.addEventListener('submit',async e=>{
+  e.preventDefault();
+  const text=chatIn.value.trim();if(!text||busy||chatDisabled)return;
+  if(!sampleFn){disableChat();return}
+  busy=true;sendBtn.disabled=true;chips.hidden=true;
+  bubble('me',text);chatIn.value='';chatIn.style.height='auto';
+  turns.push({role:'user',content:text});
+  while(turns.length>16)turns.shift();
+  if(turns[0].role!=='user')turns.shift();
+  const ctx=RULES+(lastResult?`\n\nТэр хуудсан дээрх тестийг бөглөсөн. Үр дүн: ${lastResult}. Хэрэгтэй үед үүнийг зөөлөн дурдаж болно.`:'')+'\n\nОдоо түүний мессежүүдэд хариул.';
+  const b=bubble('bot wait','Бодож байна…');
+  try{
+    const {text:ans}=await sampleFn([{role:'user',content:ctx},{role:'assistant',content:'Ойлголоо. Би зөөлөн, монголоор хариулна.'},...turns],{cache:false,onText:({text})=>{b.classList.remove('wait');b.textContent=text;msgsEl.scrollTop=msgsEl.scrollHeight}});
+    b.classList.remove('wait');b.textContent=ans;turns.push({role:'assistant',content:ans});
+  }catch(err){
+    turns.pop();
+    const c=err&&err.code;
+    if(['not_granted','sampling_disabled','not_declared','capability_disabled','capability_removed'].includes(c)){b.remove();disableChat()}
+    else{b.classList.remove('wait');b.textContent=(err&&err.text?err.text+'\n\n':'')+(c==='rate_limited'?'Одоохондоо олон мессеж ирлээ. Хэсэг амраад дахин бичээрэй.':c==='session_expired'?'Дахин нэвтэрч ороод бичээрэй.':c==='cancelled'?'':'Холболт тасарлаа. Дахин илгээгээд үзээрэй.')}
+  }finally{busy=false;sendBtn.disabled=false;msgsEl.scrollTop=msgsEl.scrollHeight}
+});
 </script>
 
-</body></html>
+</body>
+</html>
